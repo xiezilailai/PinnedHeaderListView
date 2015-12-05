@@ -91,6 +91,8 @@ public class NewListView extends ExpandableListView implements AbsListView.OnScr
          groupPosition = ExpandableListView.getPackedPositionGroup(flatpos);
 
         childPosition=ExpandableListView.getPackedPositionChild(flatpos);
+        if(headerView!=null&&expandableListAdapter!=null)
+        consider(groupPosition, childPosition);
 
     }
 
@@ -112,9 +114,12 @@ public class NewListView extends ExpandableListView implements AbsListView.OnScr
 
     }
     private void setHeaderString(int groupPosition){
-        TextView tv=(TextView)headerView.findViewById(R.id.group_textView);
-        String s=expandableListAdapter.getGroup(groupPosition).toString();
-        tv.setText(s);
+
+            TextView tv=(TextView)headerView.findViewById(R.id.group_textView);
+            String s=expandableListAdapter.getGroup(groupPosition).toString();
+            tv.setText(s);
+
+
     }
 /*
 * 在滑动listView时，根据位置判断header的位置
@@ -160,13 +165,16 @@ public class NewListView extends ExpandableListView implements AbsListView.OnScr
     *
     * */
     private int getHeaderState(int groupPosition,int childPosition){
-        final int childCount=expandableListAdapter.getChildrenCount(groupPosition);//求这一个组一共有多少个元素
-        if(childPosition==childCount-1){
-            return PUSH_UP;
-        }else if(childPosition==-1&&!isOpen[groupPosition]){
-            return GONE;
-        }
-        else return VISIBLE;
+
+            final int childCount=expandableListAdapter.getChildrenCount(groupPosition);//求这一个组一共有多少个元素
+            if(childPosition==childCount-1){
+                return PUSH_UP;
+            }else if(childPosition==-1&&!isOpen[groupPosition]){
+                return GONE;
+            }
+            else return VISIBLE;
+
+
     }
 
     @Override
